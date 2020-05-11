@@ -9,10 +9,10 @@ function getAnimeUrl(animeId: string): string {
     return `https://myanimelist.net/anime/${animeId}`;
 }
 
-async function getUserAnimelist(username: string): Promise<string[]> {
+async function getUserAnimelist(username: string): Promise<Array<string>> {
     const USER_NOT_FOUND_TEXT: string = 'Could not find user';
 
-    let animeUrls: string[] = [];
+    let animeUrls: Array<string> = [];
     const malProfileUrl: string = getProfileUrl(username);
     const htmlPage: string = await getPageText(malProfileUrl);
     
@@ -36,13 +36,13 @@ async function getUserAnimelist(username: string): Promise<string[]> {
     return animeUrls;
 }
 
-async function getAnimeSongs(malAnimeUrl: string): Promise<string[]> {
+async function getAnimeSongs(malAnimeUrl: string): Promise<Array<string>> {
     const animePageHtml: string = await getPageText(malAnimeUrl);
     const animePageDom: JSDOM = new JSDOM(animePageHtml);
 
     const songs = animePageDom.window.document.getElementsByClassName('theme-song');
 
-    let rawAnimeSongNames: string[] = [];
+    let rawAnimeSongNames: Array<string> = [];
     for (let i = 0; i < songs.length; ++i) {
         const currentSong: Element|null = songs.item(i);
 
