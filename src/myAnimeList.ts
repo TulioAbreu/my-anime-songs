@@ -23,7 +23,6 @@ async function getUserAnimelist(username: string): Promise<Array<string>> {
 
     const rawArr: RegExpMatchArray|null = htmlPage.match(/anime_id&quot;:(.*?),/g);
     if (!rawArr) {
-        console.error('Failed parsing anime_id regex matches.');
         return animeUrls;
     }
 

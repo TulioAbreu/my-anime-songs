@@ -1,7 +1,20 @@
+import Prompts from "prompts";
+import Chalk from "chalk";
+
 import { getUserAnimelist, getAnimeSongs } from './myAnimeList';
 
 async function main() {
-    // TODO: Start electron application with GUI
+    const { username } = await Prompts({
+        type: "text",
+        name: "username",
+        message: "What is your MyAnimeList username?",
+    });
+    const userAnimeList = await getUserAnimelist(username);
+    if (!userAnimeList.length) {
+        console.error(`❌ ${Chalk.red("ERROR")} User has empty list or does not exist.`);
+        return;
+    }
 }
+
 
 main();
