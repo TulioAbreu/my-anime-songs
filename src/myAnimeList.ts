@@ -1,4 +1,4 @@
-import { getPageText } from './fetchHtml';
+import { Page, getPageText } from './fetchHtml';
 import { JSDOM } from 'jsdom';
 
 function getProfileUrl(username: string): string {
@@ -14,14 +14,20 @@ async function getUserAnimelist(username: string): Promise<Array<string>> {
 
     let animeUrls: Array<string> = [];
     const malProfileUrl: string = getProfileUrl(username);
-    const htmlPage: string = await getPageText(malProfileUrl);
-    
-    if (htmlPage.indexOf(USER_NOT_FOUND_TEXT) >= 0) {
-        console.error('MAL user profile not found.');
-        return animeUrls;
+
+    const page: Page = await getPageText(malProfileUrl);
+    if (page.status.startsWith("4")) {
+        console.error("Profile not found.");
+        return [];
+    } else if (page.status.startsWith("5")) {
+        console.error("You are currently blocked from MAL.");
+        return []
+    } else if (page.status !== "200") {
+        console.error(`HTML error ${page.status}`);
+        return [];
     }
 
-    const rawArr: RegExpMatchArray|null = htmlPage.match(/anime_id&quot;:(.*?),/g);
+    const rawArr: RegExpMatchArray|null = page.htmlText.match(/anime_id&quot;:(.*?),/g);
     if (!rawArr) {
         return animeUrls;
     }
@@ -36,8 +42,8 @@ async function getUserAnimelist(username: string): Promise<Array<string>> {
 }
 
 async function getAnimeSongs(malAnimeUrl: string): Promise<Array<string>> {
-    const animePageHtml: string = await getPageText(malAnimeUrl);
-    const animePageDom: JSDOM = new JSDOM(animePageHtml);
+    const animePageHtml: Page = await getPageText(malAnimeUrl);
+    const animePageDom: JSDOM = new JSDOM(animePageHtml.htmlText);
 
     const songs = animePageDom.window.document.getElementsByClassName('theme-song');
 

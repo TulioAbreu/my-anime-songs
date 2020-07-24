@@ -1,10 +1,20 @@
 const nodeFetch: NodeRequire = require('node-fetch');
-async function getPageText(url: string): Promise<string> {
+
+interface Page {
+    status: string,
+    htmlText: string,
+}
+
+async function getPageText(url: string): Promise<Page> {
     const pageHtml: Response = await nodeFetch(url);
 
-    return pageHtml.text();
+    return {
+        status: pageHtml.status.toString(),
+        htmlText: await pageHtml.text(),
+    }
 }
 
 export {
-    getPageText
+    getPageText,
+    Page,
 };
