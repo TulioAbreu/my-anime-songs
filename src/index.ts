@@ -5,6 +5,7 @@ import * as fs from "fs";
 
 import { getUserAnimelist, getAnimeSongs } from './myAnimeList';
 import sleep from "./sleep";
+import { parseSongToKeyword } from "./keywords";
 
 function isSongListCached(username: string): boolean {
     if (!fs.existsSync("./cache")) {
@@ -57,10 +58,6 @@ async function getSongList(username: string, userAnimeList: string[]): Promise<s
     return animeSongs;
 }
 
-function parseSongToKeyword(animeSong: string): string {
-    return "";
-}
-
 async function main() {
     const { username } = await Prompts({
         type: "text",
@@ -75,8 +72,11 @@ async function main() {
     }
 
     const animeSongs = await getSongList(username, userAnimeList);
-    const youtubeKeywords = animeSongs.map(parseSongToKeyword);
+    const youtubeKeywords = animeSongs.map((animeSong: string) => {
+        return parseSongToKeyword(animeSong);
+    });
 
+    console.log(youtubeKeywords);
 }
 
 main();
