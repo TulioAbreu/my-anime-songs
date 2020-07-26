@@ -1,4 +1,5 @@
 import ytsr from "ytsr";
+import Ora from "ora";
 
 interface YtsrItem {
     link: string,
@@ -27,9 +28,16 @@ async function getYoutubeSong(keyword: string): Promise<Song | undefined> {
 
 export async function getYoutubeSongs(keywords: string[]): Promise<Song[]> {
     let songs: Song[] = [];
+    let i = 0;
+    const spinner = Ora("Searching songs at Youtube");
 
+    spinner.start();
     for (const keyword of keywords) {
         const song = await getYoutubeSong(keyword);
+
+        const percentage = (100 * i)/keywords.length;
+        spinner.prefixText = `${percentage.toFixed(1)}%`;
+        i += 1;
 
         if (!song) {
             continue;
@@ -37,6 +45,7 @@ export async function getYoutubeSongs(keywords: string[]): Promise<Song[]> {
 
         songs.push(song);
     }
+    spinner.succeed();
 
     return songs;
 }
