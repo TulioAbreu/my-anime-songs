@@ -1,15 +1,16 @@
 const nodeFetch: NodeRequire = require('node-fetch');
 import sleep from "./sleep";
 
+const config = require("../config.json");
+const MAX_REQUESTS = config["maxRequests"];
+const TIME_INTERVAL_AFTER_TIMEOUT = config["timeIntervalAfterTimeout"];
+
 interface Page {
     status: string,
     htmlText: string,
 }
 
-const MAX_REQUESTS = 10;
 const HTTP_STATUS_OK = 200;
-
-const SLEEP_TIME = 60*1000;
 
 async function getPageText(url: string): Promise<Page | undefined> {
     let page: Response;
@@ -20,7 +21,7 @@ async function getPageText(url: string): Promise<Page | undefined> {
         requests += 1;
 
         if (page.status !== HTTP_STATUS_OK) {
-            await sleep(SLEEP_TIME);
+            await sleep(TIME_INTERVAL_AFTER_TIMEOUT);
         }
     } while (page.status !== HTTP_STATUS_OK && requests < MAX_REQUESTS);
 

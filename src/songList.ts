@@ -5,7 +5,8 @@ import Ora from "ora";
 import { getAnimeSongs } from './myAnimeList';
 import Chalk from "chalk";
 
-const REQUEST_INTERVAL = 3000;
+const config = require("../config.json");
+const TIME_BETWEEN_REQUESTS = config["timeBetweenRequests"];
 
 function isSongListCached(username: string): boolean {
     if (!fs.existsSync("./cache")) {
@@ -42,7 +43,7 @@ export async function getSongList(username: string, userAnimeList: string[]): Pr
         (await getAnimeSongs(anime)).map((song) => {
             animeSongs.push(song);
         });
-        await sleep(REQUEST_INTERVAL);
+        await sleep(TIME_BETWEEN_REQUESTS);
 
         const percentage = (100 * i)/userAnimeList.length;
         spinner.prefixText = `${percentage.toFixed(1)}%`

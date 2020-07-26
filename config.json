@@ -1,0 +1,5 @@
+{
+    "timeBetweenRequests": "4000",
+    "timeIntervalAfterTimeout": "120000",
+    "maxRequests": 10
+}
