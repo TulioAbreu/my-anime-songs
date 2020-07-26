@@ -3,6 +3,8 @@ import Chalk from "chalk";
 import { parseSongToKeyword } from "./keywords";
 import { getUserAnimelist } from './myAnimeList';
 import { getSongList } from "./songList";
+import { getYoutubeSongs } from "./youtubeSearch";
+import { saveJSON } from "./utils";
 
 async function main() {
     const { username } = await Prompts({
@@ -22,7 +24,8 @@ async function main() {
         return parseSongToKeyword(animeSong);
     });
 
-    console.log(youtubeKeywords);
+    const playList = await getYoutubeSongs(youtubeKeywords);
+    saveJSON(`./${username}_playlist.json`, playList);
 }
 
 main();

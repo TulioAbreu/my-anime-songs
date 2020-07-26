@@ -8,7 +8,8 @@ interface Page {
 
 const MAX_REQUESTS = 10;
 const HTTP_STATUS_OK = 200;
-const SLEEP_TIME = 1000;
+
+const SLEEP_TIME = 60*1000;
 
 async function getPageText(url: string): Promise<Page | undefined> {
     let page: Response;
