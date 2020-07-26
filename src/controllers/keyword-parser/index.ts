@@ -41,5 +41,10 @@ function removeEpisodesTag(str: string): string {
 }
 
 export  {
-    parseSongToKeyword
+    parseSongToKeyword,
+    parseStr,
+    getParsingSteps,
+    removeSpecialChars,
+    removeNumberTag,
+    removeEpisodesTag,
 }

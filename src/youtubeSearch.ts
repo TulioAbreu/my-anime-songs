@@ -1,9 +1,6 @@
 import ytsr from "ytsr";
 import Ora from "ora";
-
-interface YtsrItem {
-    link: string,
-}
+import YtsrResponse from "./types/ytsr";
 
 interface Song {
     name: string,
@@ -19,7 +16,7 @@ async function getYoutubeSong(keyword: string): Promise<Song | undefined> {
         return;
     }
 
-    const { link } = response.items[0] as YtsrItem;
+    const { link } = response.items[0] as YtsrResponse;
     return {
         name: keyword,
         url: link,

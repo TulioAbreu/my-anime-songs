@@ -1,6 +1,6 @@
 import Prompts from "prompts";
 import Chalk from "chalk";
-import { parseSongToKeyword } from "./keywords";
+import { parseSongToKeyword } from "./controllers/keyword-parser";
 import { getUserAnimelist } from './myAnimeList';
 import { getSongList } from "./songList";
 import { getYoutubeSongs } from "./youtubeSearch";
