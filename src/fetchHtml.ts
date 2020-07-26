@@ -1,5 +1,6 @@
+import { sleep } from "./utils";
+
 const nodeFetch: NodeRequire = require('node-fetch');
-import sleep from "./sleep";
 
 const config = require("../config.json");
 const MAX_REQUESTS = config["maxRequests"];

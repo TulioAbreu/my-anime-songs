@@ -1,8 +1,8 @@
 import * as fs from "fs";
-import sleep from "./sleep";
-import { saveJSON } from "./utils";
+import { sleep } from "../../utils";
+import { saveJSON } from "../../utils";
 import Ora from "ora";
-import { getAnimeSongs } from './myAnimeList';
+import { getAnimeSongs } from "../../myAnimeList";
 import Chalk from "chalk";
 
 const config = require("../config.json");
