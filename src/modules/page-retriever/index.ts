@@ -1,8 +1,8 @@
-import { sleep } from "./utils";
+import sleep from "../utils/sleep";
+import config from "../../config";
 
 const nodeFetch: NodeRequire = require('node-fetch');
 
-const config = require("../config.json");
 const MAX_REQUESTS = config["maxRequests"];
 const TIME_INTERVAL_AFTER_TIMEOUT = config["timeIntervalAfterTimeout"];
 

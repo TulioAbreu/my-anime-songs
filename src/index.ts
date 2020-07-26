@@ -2,9 +2,9 @@ import Prompts from "prompts";
 import Chalk from "chalk";
 import { parseSongToKeyword } from "./modules/keyword-parser";
 import { getUserAnimelist } from './myAnimeList';
-import { getSongList } from "./modules/song-list";
+import { getSongList } from "./modules/song-list-retriever";
 import { getYoutubeSongs } from "./youtubeSearch";
-import { saveJSON } from "./utils";
+import saveJSON from "./modules/utils/save-json";
 
 async function main() {
     const { username } = await Prompts({

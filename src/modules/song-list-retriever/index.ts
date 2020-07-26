@@ -1,11 +1,11 @@
 import * as fs from "fs";
-import { sleep } from "../../utils";
-import { saveJSON } from "../../utils";
+import sleep from "../utils/sleep";
+import saveJSON from "../utils/save-json";
 import Ora from "ora";
 import { getAnimeSongs } from "../../myAnimeList";
 import Chalk from "chalk";
+import config from "../../config";
 
-const config = require("../config.json");
 const TIME_BETWEEN_REQUESTS = config["timeBetweenRequests"];
 
 function isSongListCached(username: string): boolean {

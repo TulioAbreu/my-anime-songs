@@ -1,4 +1,4 @@
-import { Page, getPageText } from './fetchHtml';
+import { getPageText } from './modules/page-retriever';
 import { JSDOM } from 'jsdom';
 
 function getProfileUrl(username: string): string {
@@ -10,8 +10,6 @@ function getAnimeUrl(animeId: string): string {
 }
 
 async function getUserAnimelist(username: string): Promise<string[]> {
-    const USER_NOT_FOUND_TEXT: string = 'Could not find user';
-
     let animeUrls: string[] = [];
     const malProfileUrl: string = getProfileUrl(username);
 

@@ -1,11 +1,7 @@
 import ytsr from "ytsr";
 import Ora from "ora";
 import YtsrResponse from "./types/ytsr";
-
-interface Song {
-    name: string,
-    url: string,
-}
+import Song from "./types/song";
 
 async function getYoutubeSong(keyword: string): Promise<Song | undefined> {
     const response = await ytsr(keyword, {
