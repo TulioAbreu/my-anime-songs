@@ -1,4 +1,6 @@
-# My-Anime-Songs
+![MyAnimeSongs](https://github.com/TulioAbreu/my-anime-songs/workflows/JavaScript%20workflow/badge.svg?branch=master)# 
+
+My-Anime-Songs
 
 This is a tool for getting all songs from the animes you've seen (based on your MyAnimeList profile). It uses node-fetch package for scrapping your profile animes and search into MyAnimeList pages all associated theme songs. 
 
