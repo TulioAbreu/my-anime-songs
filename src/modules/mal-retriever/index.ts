@@ -1,6 +1,8 @@
 import { getPageText } from "../page-retriever";
 import { JSDOM } from "jsdom";
 
+type Maybe<T> = T | null;
+
 function getProfileUrl(username: string): string {
     return `https://myanimelist.net/animelist/${username}`;
 }
@@ -9,9 +11,29 @@ function getAnimeUrl(animeId: string): string {
     return `https://myanimelist.net/anime/${animeId}`;
 }
 
-// TODO: Split function into page retrieve + regex searches
+function getUserAnimeUrlsFromPage(pageHtmlText: string): string[] {
+    if (!pageHtmlText || !pageHtmlText.length) {
+        return [];
+    }
+
+    const ANIME_ID_REGEX = /anime_id&quot;:(.*?),/g;
+
+    const rawAnimeIds: Maybe<RegExpMatchArray> = pageHtmlText.match(ANIME_ID_REGEX);
+    if (!rawAnimeIds) {
+        return [];
+    }
+
+    return rawAnimeIds.map((rawAnimeId: string) => {
+        const animeId = rawAnimeId.split("&quot;:").pop();
+        if (!animeId) {
+            return "";
+        } else {
+            return getAnimeUrl(animeId.slice(0, -1));
+        }
+    });
+}
+
 async function getUserAnimelist(username: string): Promise<string[]> {
-    const animeUrls: string[] = [];
     const malProfileUrl: string = getProfileUrl(username);
 
     const page = await getPageText(malProfileUrl);
@@ -19,18 +41,7 @@ async function getUserAnimelist(username: string): Promise<string[]> {
         return [];
     }
 
-    const rawArr: RegExpMatchArray|null = page.htmlText.match(/anime_id&quot;:(.*?),/g);
-    if (!rawArr) {
-        return animeUrls;
-    }
-
-    rawArr.forEach(rawResult => {
-        const animeId: string = rawResult.split("&quot;:")[1].slice(0, -1);
-
-        animeUrls.push(getAnimeUrl(animeId));
-    });
-
-    return animeUrls;
+    return getUserAnimeUrlsFromPage(page.htmlText);
 }
 
 // TODO: Split function into page retrieve + regex searches
@@ -60,6 +71,7 @@ async function getAnimeSongs(malAnimeUrl: string): Promise<string[]> {
 export {
     getAnimeSongs,
     getUserAnimelist,
+    getUserAnimeUrlsFromPage,
     getAnimeUrl,
     getProfileUrl,
 };
