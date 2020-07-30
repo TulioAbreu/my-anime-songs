@@ -4,7 +4,7 @@ import { JSDOM } from "jsdom";
 type Maybe<T> = T | null;
 
 function getProfileUrl(username: string): string {
-    return `https://myanimelist.net/animelist/${username}`;
+    return `https://myanimdselist.net/animelist/${username}`;
 }
 
 function getAnimeUrl(animeId: string): string {
