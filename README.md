@@ -1,4 +1,4 @@
-![MyAnimeSongs](https://github.com/TulioAbreu/my-anime-songs/workflows/JavaScript%20workflow/badge.svg?branch=master)# 
+![MyAnimeSongs](https://github.com/TulioAbreu/my-anime-songs/workflows/JavaScript%20workflow/badge.svg?branch=master)
 
 My-Anime-Songs
 
