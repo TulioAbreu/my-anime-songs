@@ -2,7 +2,7 @@ import * as fs from "fs";
 import sleep from "../utils/sleep";
 import saveJSON from "../utils/save-json";
 import Ora from "ora";
-import { getAnimeSongs } from "../../myAnimeList";
+import { getAnimeSongs } from "../mal-retriever";
 import Chalk from "chalk";
 import config from "../../config";
 
@@ -36,7 +36,7 @@ export async function getSongList(username: string, userAnimeList: string[]): Pr
     }
 
     const spinner = Ora("Downloading animes song list");
-    let animeSongs: string[] = [];
+    const animeSongs: string[] = [];
     spinner.start();
     let i = 0;
     for (const anime of userAnimeList) {
@@ -46,7 +46,7 @@ export async function getSongList(username: string, userAnimeList: string[]): Pr
         await sleep(TIME_BETWEEN_REQUESTS);
 
         const percentage = (100 * i)/userAnimeList.length;
-        spinner.prefixText = `${percentage.toFixed(1)}%`
+        spinner.prefixText = `${percentage.toFixed(1)}%`;
         i += 1;
     }
     spinner.succeed();

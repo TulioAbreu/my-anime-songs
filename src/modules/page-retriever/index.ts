@@ -1,7 +1,8 @@
 import sleep from "../utils/sleep";
 import config from "../../config";
 
-const nodeFetch: NodeRequire = require('node-fetch');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const nodeFetch: NodeRequire = require("node-fetch");
 
 const MAX_REQUESTS = config["maxRequests"];
 const TIME_INTERVAL_AFTER_TIMEOUT = config["timeIntervalAfterTimeout"];
@@ -33,7 +34,7 @@ async function getPageText(url: string): Promise<Page | undefined> {
         return {
             status: page.status.toString(),
             htmlText: await page.text(),
-        }
+        };
     }
 }
 

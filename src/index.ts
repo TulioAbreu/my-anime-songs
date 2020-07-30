@@ -1,7 +1,7 @@
 import Prompts from "prompts";
 import Chalk from "chalk";
 import { parseSongToKeyword } from "./modules/keyword-parser";
-import { getUserAnimelist } from './myAnimeList';
+import { getUserAnimelist } from "./modules/mal-retriever";
 import { getSongList } from "./modules/song-list-retriever";
 import { getYoutubeSongs } from "./youtubeSearch";
 import saveJSON from "./modules/utils/save-json";

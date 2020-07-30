@@ -1,10 +1,12 @@
+type ParsingFunction = (arg0: string) => string;
+
 function parseSongToKeyword(str: string): string {
     const parsingSteps = getParsingSteps();
     const parsedStr = parseStr(str, parsingSteps);
     return parsedStr;
 }
 
-function parseStr(str: string, steps: Function[]): string {
+function parseStr(str: string, steps: ParsingFunction[]): string {
     let parsedStr = str;
     for (const step of steps) {
         parsedStr = step(parsedStr);
@@ -12,7 +14,7 @@ function parseStr(str: string, steps: Function[]): string {
     return parsedStr.trim();
 }
 
-function getParsingSteps(): Function[] {
+function getParsingSteps(): ParsingFunction[] {
     return [
         removeEpisodesTag,
         removeNumberTag,
@@ -33,7 +35,7 @@ function removeSpecialChars(str: string): string {
 }
 
 function removeNumberTag(str: string): string {
-    return str.replace(/#[0-9]+(.*)?\:/g, "");
+    return str.replace(/#[0-9]+(.*)?:/g, "");
 }
 
 function removeEpisodesTag(str: string): string {
@@ -47,4 +49,4 @@ export  {
     removeSpecialChars,
     removeNumberTag,
     removeEpisodesTag,
-}
+};

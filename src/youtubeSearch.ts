@@ -16,11 +16,11 @@ async function getYoutubeSong(keyword: string): Promise<Song | undefined> {
     return {
         name: keyword,
         url: link,
-    }
+    };
 }
 
 export async function getYoutubeSongs(keywords: string[]): Promise<Song[]> {
-    let songs: Song[] = [];
+    const songs: Song[] = [];
     let i = 0;
     const spinner = Ora("Searching songs at Youtube");
 

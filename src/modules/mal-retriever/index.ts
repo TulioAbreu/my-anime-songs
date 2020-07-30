@@ -1,5 +1,5 @@
-import { getPageText } from '../page-retriever';
-import { JSDOM } from 'jsdom';
+import { getPageText } from "../page-retriever";
+import { JSDOM } from "jsdom";
 
 function getProfileUrl(username: string): string {
     return `https://myanimelist.net/animelist/${username}`;
@@ -10,7 +10,7 @@ function getAnimeUrl(animeId: string): string {
 }
 
 async function getUserAnimelist(username: string): Promise<string[]> {
-    let animeUrls: string[] = [];
+    const animeUrls: string[] = [];
     const malProfileUrl: string = getProfileUrl(username);
 
     const page = await getPageText(malProfileUrl);
@@ -24,7 +24,7 @@ async function getUserAnimelist(username: string): Promise<string[]> {
     }
 
     rawArr.forEach(rawResult => {
-        let animeId: string = rawResult.split('&quot;:')[1].slice(0, -1);
+        const animeId: string = rawResult.split("&quot;:")[1].slice(0, -1);
 
         animeUrls.push(getAnimeUrl(animeId));
     });
@@ -40,9 +40,9 @@ async function getAnimeSongs(malAnimeUrl: string): Promise<string[]> {
 
     const animePageDom: JSDOM = new JSDOM(animePageHtml.htmlText);
 
-    const songs = animePageDom.window.document.getElementsByClassName('theme-song');
+    const songs = animePageDom.window.document.getElementsByClassName("theme-song");
 
-    let rawAnimeSongNames: string[] = [];
+    const rawAnimeSongNames: string[] = [];
     for (let i = 0; i < songs.length; ++i) {
         const currentSong: Element|null = songs.item(i);
 
