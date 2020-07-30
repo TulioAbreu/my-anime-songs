@@ -1,4 +1,4 @@
-import { getPageText } from './modules/page-retriever';
+import { getPageText } from '../page-retriever';
 import { JSDOM } from 'jsdom';
 
 function getProfileUrl(username: string): string {
