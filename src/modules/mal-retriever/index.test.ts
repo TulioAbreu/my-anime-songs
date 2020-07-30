@@ -1,7 +1,9 @@
 import {
     getAnimeUrl,
-    getProfileUrl
+    getProfileUrl,
+    getUserAnimeUrlsFromPage,
 } from  "./index";
+import * as fs from "fs";
 
 function getUserName(): string {
     return "user12345678910";
@@ -9,6 +11,10 @@ function getUserName(): string {
 
 function getAnimeId(): string {
     return "1232132132";
+}
+
+function getSampleHtml(): string {
+    return fs.readFileSync(__dirname + "/testHtml.html", { encoding: "utf8" });
 }
 
 test("get user animelist url", () => {
@@ -23,3 +29,12 @@ test("get anime url", () => {
     expect(url).toBe(`https://myanimelist.net/anime/${ANIME_ID}`);
 });
 
+test("get anime urls from sample HTML", () => {
+    const sampleHtml = getSampleHtml();
+    const urlsList = [
+        "https://myanimelist.net/anime/38084",
+        "https://myanimelist.net/anime/40046",
+    ];
+    const extractedUrls = getUserAnimeUrlsFromPage(sampleHtml);
+    expect(extractedUrls).toStrictEqual(urlsList);
+});
