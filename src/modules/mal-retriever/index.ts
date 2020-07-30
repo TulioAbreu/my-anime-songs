@@ -9,6 +9,7 @@ function getAnimeUrl(animeId: string): string {
     return `https://myanimelist.net/anime/${animeId}`;
 }
 
+// TODO: Split function into page retrieve + regex searches
 async function getUserAnimelist(username: string): Promise<string[]> {
     const animeUrls: string[] = [];
     const malProfileUrl: string = getProfileUrl(username);
@@ -32,6 +33,7 @@ async function getUserAnimelist(username: string): Promise<string[]> {
     return animeUrls;
 }
 
+// TODO: Split function into page retrieve + regex searches
 async function getAnimeSongs(malAnimeUrl: string): Promise<string[]> {
     const animePageHtml = await getPageText(malAnimeUrl);
     if (!animePageHtml) {
@@ -57,5 +59,7 @@ async function getAnimeSongs(malAnimeUrl: string): Promise<string[]> {
 
 export {
     getAnimeSongs,
-    getUserAnimelist
+    getUserAnimelist,
+    getAnimeUrl,
+    getProfileUrl,
 };
