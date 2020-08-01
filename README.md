@@ -1,16 +1,15 @@
 ![MyAnimeSongs](https://github.com/TulioAbreu/my-anime-songs/workflows/JavaScript%20workflow/badge.svg?branch=master)
 
-My-Anime-Songs
+# MyAnimeSongs
 
-This is a tool for getting all songs from the animes you've seen (based on your MyAnimeList profile). It uses node-fetch package for scrapping your profile animes and search into MyAnimeList pages all associated theme songs. 
+This is a tool that checks your MyAnimeList profile and returns a JSON file containing Youtube URLs for all anime songs from your list (aka opening and ending songs). After that you may use the JSON content as you wish.
 
-**Important:** Please be careful when modifying the application. Be friendly with the scrapped websites to avoid possible temporary/permanent blocks.
+Please, be careful while configuring the `timeBetweenRequests`, you can be temporarily blocked.
 
 # Dependencies
 
-- NPM;
-- Node;
-- Typescript;
+- Node
+- NPM
 
 # Getting started
 
@@ -20,3 +19,5 @@ $ cd my-anime-songs
 $ npm i
 $ npm start
 ```
+
+The program will ask for your MyAnimeList profile name (case sensitive) and them start working.
