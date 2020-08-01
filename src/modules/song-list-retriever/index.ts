@@ -1,10 +1,10 @@
 import * as fs from "fs";
 import sleep from "../utils/sleep";
 import saveJSON from "../utils/save-json";
-import Ora from "ora";
 import { getAnimeSongs } from "../mal-retriever";
 import Chalk from "chalk";
 import config from "../../config";
+import { ProgressCallbacks } from "../../types/progress-callbacks";
 
 const TIME_BETWEEN_REQUESTS = config["timeBetweenRequests"];
 
@@ -30,26 +30,22 @@ function cacheSongList(username: string, songList: string[]) {
     saveJSON(`./cache/${username}.json`, songList);
 }
 
-export async function getSongList(username: string, userAnimeList: string[]): Promise<string[]> {
+export async function getSongList(username: string, userAnimeList: string[], progress?: ProgressCallbacks): Promise<string[]> {
     if (isSongListCached(username)) {
         return getCachedSongList(username);
     }
 
-    const spinner = Ora("Downloading animes song list");
     const animeSongs: string[] = [];
-    spinner.start();
-    let i = 0;
+    progress?.onStart();
     for (const anime of userAnimeList) {
         (await getAnimeSongs(anime)).map((song) => {
             animeSongs.push(song);
         });
         await sleep(TIME_BETWEEN_REQUESTS);
 
-        const percentage = (100 * i)/userAnimeList.length;
-        spinner.prefixText = `${percentage.toFixed(1)}%`;
-        i += 1;
+        progress?.onProgress();
     }
-    spinner.succeed();
+    progress?.onFinish();
 
     cacheSongList(username, animeSongs);
     return animeSongs;

@@ -6,6 +6,7 @@ import { getSongList } from "./modules/song-list-retriever";
 import { getYoutubeSongs } from "./youtubeSearch";
 import saveJSON from "./modules/utils/save-json";
 import { getPageText } from "./modules/page-retriever";
+import { Progress } from "./modules/progress";
 
 async function main() {
     const { username } = await Prompts({
@@ -22,13 +23,22 @@ async function main() {
     }
 
     const userAnimeList = getUserAnimeUrlsFromPage(userAnimeListPage);
-    const animeSongs = await getSongList(username, userAnimeList);
+    const animeSongsProgress = new Progress("Downloading anime list", userAnimeList.length);
+    const animeSongs = await getSongList(username, userAnimeList, {
+        onStart: () => { animeSongsProgress.start(); },
+        onProgress: () => { animeSongsProgress.progress(); },
+        onFinish: () => { animeSongsProgress.finish(); },
+    });
 
     const youtubeKeywords = animeSongs.map((animeSong: string) => {
         return parseSongToKeyword(animeSong);
     });
-
-    const playList = await getYoutubeSongs(youtubeKeywords);
+    const playListSearchProgress = new Progress("Searching youtube URLs", youtubeKeywords.length);
+    const playList = await getYoutubeSongs(youtubeKeywords, {
+        onStart: () => { playListSearchProgress.start(); },
+        onProgress: () => { playListSearchProgress.progress(); },
+        onFinish: () => { playListSearchProgress.finish(); },
+    });
     saveJSON(`./${username}_playlist.json`, playList);
 }
 
