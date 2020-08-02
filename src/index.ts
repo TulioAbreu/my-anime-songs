@@ -17,7 +17,7 @@ async function main() {
 
     const userAnimeListUrl = getProfileUrl(username);
     const userAnimeListPage = (await getPageText(userAnimeListUrl))?.htmlText;
-    if (!userAnimeListPage) {
+    if (!userAnimeListPage || !userAnimeListPage.length) {
         console.error(`❌ ${Chalk.red("ERROR")} User has empty list or does not exist.`);
         return;
     }
@@ -30,9 +30,7 @@ async function main() {
         onFinish: () => { animeSongsProgress.finish(); },
     });
 
-    const youtubeKeywords = animeSongs.map((animeSong: string) => {
-        return parseSongToKeyword(animeSong);
-    });
+    const youtubeKeywords = animeSongs.map(parseSongToKeyword);
     const playListSearchProgress = new Progress("Searching youtube URLs", youtubeKeywords.length);
     const playList = await getYoutubeSongs(youtubeKeywords, {
         onStart: () => { playListSearchProgress.start(); },
