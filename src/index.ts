@@ -37,6 +37,7 @@ async function main() {
         onProgress: () => { playListSearchProgress.progress(); },
         onFinish: () => { playListSearchProgress.finish(); },
     });
+
     saveJSON(`./${username}_playlist.json`, playList);
 }
 
